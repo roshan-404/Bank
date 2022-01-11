@@ -2,7 +2,6 @@ package db
 
 import (
 	"context"
-	"math/rand"
 	"simpleBank/util"
 	"testing"
 	"time"
@@ -10,10 +9,10 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func getRandomId(t *testing.T) int64 {
+func getAccountId(t *testing.T) []int64 {
 	arg := ListAccountsParams{
-		Limit: 10,
-		Offset: 5,
+		Limit: 2,
+		Offset: 0,
 	}
 	accounts, err := testQueries.ListAccounts(context.Background(), arg)
 	require.NoError(t, err)
@@ -22,13 +21,13 @@ func getRandomId(t *testing.T) int64 {
 	for _, account := range accounts {
 		accountId = append(accountId, account.ID)
 	}
-	n := len(accountId)
-	return accountId[rand.Intn(n)]
+	
+	return accountId
 }
 
 func createRandomEntry(t *testing.T) Entry {
     arg := CreateEntryParams{
-        AccountID: getRandomId(t),
+        AccountID: getAccountId(t)[0],
         Amount:    util.RandomMoney(),
     }
 
@@ -61,15 +60,16 @@ func TestGetEntry(t *testing.T) {
 }
 
 func TestListEntries(t *testing.T) {
+
 	arg := ListEntriesParams{
-		AccountID: getRandomId(t),
+		AccountID: getAccountId(t)[0],
 		Limit: 5,
 		Offset: 0,
 	}
 
 	entries, err := testQueries.ListEntries(context.Background(),  arg)
 	require.NoError(t, err)
-	require.Len(t, entries, 1)
+	require.Len(t, entries, 5)
 
 	for _,entry := range entries {
 		require.NotEmpty(t, entry) 
