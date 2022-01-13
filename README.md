@@ -18,16 +18,8 @@ This is a bank service where we will provide API to fronted for doing things suc
     ```bash
     brew install sqlc
     ```
-- [Gomock](https://github.com/golang/mock)
-    ``` bash
-    go install github.com/golang/mock/mockgen@v1.6.0
-    ```
 
 ## Setup infrastructure
-- Create the bank-network
-    ``` bash
-    make network
-    ```
 - Start postgres container:
     ```bash
     make postgres
@@ -40,17 +32,9 @@ This is a bank service where we will provide API to fronted for doing things suc
     ```bash
     make migrateup
     ```
-- Run db migration up 1 version:
-    ```bash
-    make migrateup1
-    ```
 - Run db migration down all versions:
     ```bash
     make migratedown
-    ```
-- Run db migration down 1 version:
-    ```bash
-    make migratedown1
     ```
 
 ## How to generate code
@@ -58,20 +42,12 @@ This is a bank service where we will provide API to fronted for doing things suc
     ```bash
     make sqlc
     ```
-- Generate DB mock with gomock:
-    ```bash
-    make mock
-    ```
 - Create a new db migration:
     ```bash
     migrate create -ext sql -dir db/migration -seq <migration_name>
     ```
 
 ## How to run
-- Run server:
-    ```bash
-    make server
-    ```
 - Run test:
     ```bash
     make test
