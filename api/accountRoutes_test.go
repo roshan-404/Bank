@@ -101,6 +101,7 @@ func TestGetAccountAPI(t *testing.T) {
 
 			server.router.ServeHTTP(recorder, request)
 			tc.checkResponse(t, recorder)
+			
 		})
 	}
 }
@@ -309,7 +310,7 @@ func TestListAccountsAPI(t *testing.T) {
 
 			store := mockdb.NewMockStore(ctrl)
 			tc.buildStubs(store)
-
+	
 			server := NewServer(store)
 			recorder := httptest.NewRecorder()
 

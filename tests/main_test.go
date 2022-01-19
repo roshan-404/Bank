@@ -1,21 +1,21 @@
-package db
+package test
 
 import (
 	"database/sql"
 	"log"
 	"os"
+	db "simpleBank/db/sqlc"
 	"simpleBank/util"
 	"testing"
 
 	_ "github.com/lib/pq"
 )
 
-
-var testQueries *Queries
+var testQueries *db.Queries
 var testDB *sql.DB
 
 func TestMain(m *testing.M) {
-	config, err := util.LoadConfig("../..")
+	config, err := util.LoadConfig("../.")
 	if err != nil {
 		log.Fatal("cannot load config:", err)
 	}
@@ -25,7 +25,7 @@ func TestMain(m *testing.M) {
 		log.Fatal("cannot connect to db:", err)
 	}
 
-	testQueries = New(testDB)
+	testQueries = db.New(testDB)
 
 	os.Exit(m.Run())
 }
