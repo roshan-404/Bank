@@ -24,6 +24,7 @@ sqlc:
 
 test: 
 	go test -v ./...
+	
 mock:
 	mockgen -package mockdb -destination db/mock/store.go simpleBank/db/sqlc Store
 
