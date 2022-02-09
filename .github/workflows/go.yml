@@ -1,13 +1,12 @@
-name: Test 
+name: Test
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
-
   test:
     name: Test
     runs-on: ubuntu-latest
@@ -26,27 +25,25 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-        
-
 
     steps:
-    - name: Set up Go 1.x
-      uses: actions/setup-go@v2
-      with:
-        go-version: ^1.16
-      id: go
+      - name: Set up Go 1.x
+        uses: actions/setup-go@v2
+        with:
+          go-version: ^1.17
+        id: go
 
-    - name: Check out code into the Go module directory
-      uses: actions/checkout@v2
-      
-    - name: Install golang-migrate 
-      run: | 
-        curl -L https://github.com/golang-migrate/migrate/releases/download/v4.15.1/migrate.linux-amd64.tar.gz | tar xvz 
-        sudo mv migrate /usr/bin/migrate
-        which migrate
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
 
-    - name: Run Migrations 
-      run: make migrateup 
+      - name: Install golang-migrate
+        run: |
+          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.15.1/migrate.linux-amd64.tar.gz | tar xvz 
+          sudo mv migrate /usr/bin/migrate
+          which migrate
 
-    - name: Test
-      run: make test
+      - name: Run Migrations
+        run: make migrateup
+
+      - name: Test
+        run: make test
